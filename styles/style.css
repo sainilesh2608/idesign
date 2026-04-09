@@ -2761,7 +2761,7 @@ button {
 
 /* ═══════════════════ STUDIO VISIT SECTION ═══════════════════ */
 .studio-visit {
-  background-image: url(./images/studio.jpg);
+  background-image: url(../images/studio.jpg);
   background-attachment: fixed;
   background-size: cover;
   background-position: 50%;
