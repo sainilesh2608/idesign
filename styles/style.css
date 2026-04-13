@@ -173,6 +173,9 @@ body:not(.page-loader-active) .cursor {
   text-align: center;
   animation: loader-scale 3.5s ease-in-out forwards;
 }
+.logo-white{
+  max-width: 220px;
+}
 
 .loader-logo {
   width: 120px;
@@ -1228,7 +1231,7 @@ button {
 
 .img-accent {
   position: absolute;
-  bottom: -3rem;
+  top: -3rem;
   right: -3rem;
   width: 52%;
   overflow: hidden;
@@ -1250,7 +1253,7 @@ button {
 
 .img-badge {
   position: absolute;
-  top: 2.5rem;
+  bottom: 2.5rem;
   left: -2rem;
   background: var(--red);
   color: var(--white);
@@ -2754,7 +2757,6 @@ button {
 .lb-prev {
   left: 1.5rem;
 }
-
 .lb-next {
   right: 1.5rem;
 }
@@ -2788,7 +2790,25 @@ button {
   gap: 5rem;
   align-items: start;
 }
-
+/* SCROLL BAR */
+/* Thin Crimson — 3px hairline */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #C8102E rgba(200,16,46,0.07);
+}
+html::-webkit-scrollbar {
+  width: 3px;
+}
+html::-webkit-scrollbar-track {
+  background: rgba(200,16,46,0.07);
+}
+html::-webkit-scrollbar-thumb {
+  background: #C8102E;
+  border-radius: 10px;
+}
+html::-webkit-scrollbar-thumb:hover {
+  background: #8B0A1F;
+}
 
 /* ═══════════════════════════════════════════════════════════
    RESPONSIVE — Tablet (≤1024px)
