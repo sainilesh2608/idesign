@@ -483,6 +483,7 @@ button {
   display: flex;
   align-items: center;
   gap: 0.25rem;
+  margin: 0;
 }
 
 .nav-link {
@@ -1452,7 +1453,7 @@ button {
 .projects {
   background: var(--light-grey);
 }
-
+/* 
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -1550,6 +1551,178 @@ button {
 
 .projects-cta {
   text-align: center;
+} */
+
+/*
+  Grid layout — 5 cards, zero gaps:
+  ┌─────────────────────┬────────────┐  260px
+  │                     │  kitchen   │
+  │       living        ├─────┬──────┤  260px
+  │                     │ bed │ off  │
+  ├─────────────────────┴─────┴──────┤  320px
+  │              villa               │
+  └──────────────────────────────────┘
+*/
+.projects-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-rows: 260px 260px 320px;
+  grid-template-areas:
+    "living  kitchen  kitchen"
+    "living  bedroom  office"
+    "villa   villa    villa";
+  gap: 3px;
+  background: #e6e4e0; /* border colour between cards */
+  margin-bottom: 3rem;
+}
+
+/* ── Named area assignments ── */
+.pc-living  { grid-area: living;  }
+.pc-kitchen { grid-area: kitchen; }
+.pc-bedroom { grid-area: bedroom; }
+.pc-office  { grid-area: office;  }
+.pc-villa   { grid-area: villa;   }
+
+/* ── Shared card base ── */
+.project-card {
+  position: relative;
+  overflow: hidden;
+  background: #1c1c1c;
+  cursor: pointer;
+}
+
+/* Image fills the card completely */
+.project-img {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.project-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.72);
+  transition: transform 0.85s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              filter 0.55s;
+  will-change: transform;
+}
+.project-card:hover .project-img img {
+  transform: scale(1.07);
+  filter: brightness(0.45);
+}
+
+/* Gradient vignette so text is readable */
+.project-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.75rem 2rem;
+  z-index: 1;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.72) 0%,
+    rgba(0, 0, 0, 0.18) 45%,
+    transparent 100%
+  );
+}
+
+/* Category label — slides in on hover */
+.project-cat {
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #C8102E;
+  margin-bottom: 0.4rem;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.4s, transform 0.4s;
+}
+.project-card:hover .project-cat {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Title */
+.project-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.45rem;
+  font-weight: 400;
+  color: #ffffff;
+  line-height: 1.2;
+  transform: translateY(14px);
+  transition: transform 0.45s;
+}
+.project-card:hover .project-title {
+  transform: translateY(0);
+}
+
+/* Villa title slightly larger — it's full-width */
+.pc-villa .project-title {
+  font-size: 2rem;
+}
+
+/* Location */
+.project-loc {
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.06em;
+  margin-top: 0.3rem;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.38s 0.08s, transform 0.38s 0.08s;
+}
+.project-card:hover .project-loc {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Red sweep line at bottom on hover */
+.project-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 0;
+  background: #C8102E;
+  transition: width 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  z-index: 2;
+}
+.project-card:hover::after {
+  width: 100%;
+}
+
+/* ── Tablet (≤1024px) ── */
+@media (max-width: 1024px) {
+  .projects-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 240px 240px 300px;
+    grid-template-areas:
+      "living  kitchen"
+      "bedroom office"
+      "villa   villa";
+  }
+  .pc-villa .project-title { font-size: 1.6rem; }
+}
+
+/* ── Mobile (≤768px) ── */
+@media (max-width: 768px) {
+  .projects-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(5, 220px);
+    grid-template-areas:
+      "living"
+      "kitchen"
+      "bedroom"
+      "office"
+      "villa";
+    gap: 0.5rem;
+    background: transparent;
+  }
+  .pc-villa .project-title { font-size: 1.45rem; }
 }
 
 /* ─── CTA BANNER ─────────────────────────────────────── */
@@ -1567,8 +1740,9 @@ button {
   position: absolute;
   inset: 0;
   background: url('../images/get-in-touch.png') center/cover no-repeat;
-  filter: brightness(0.35);
+  filter: brightness(0.5);
   transition: transform 0.8s var(--ease);
+  top: -105px;
 }
 
 .cta-banner:hover .cta-banner-bg {
