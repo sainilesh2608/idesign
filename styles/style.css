@@ -173,9 +173,22 @@ body:not(.page-loader-active) .cursor {
   text-align: center;
   animation: loader-scale 3.5s ease-in-out forwards;
 }
-.logo-white{
+.logo img{
   max-width: 220px;
 }
+.site-header.scrolled .logo:has(.logo-dark) {
+  display: block !important;
+}
+.site-header.scrolled .logo:has(.logo-white) {
+  display: none !important;
+}
+.site-header .logo:has(.logo-dark) {
+  display: none;
+}
+.site-header .logo:has(.logo-white) {
+  display: block;
+}
+
 
 .loader-logo {
   width: 120px;
