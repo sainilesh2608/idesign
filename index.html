@@ -1170,7 +1170,7 @@
   </a>
 </div>
         </div>
-        <div class="contact-form-wrap fade-in-section delay-1">
+        <!-- <div class="contact-form-wrap fade-in-section delay-1">
           <div class="contact-form">
             <div class="form-row">
               <div class="form-group"><label for="name">Your Name</label><input type="text" id="name"
@@ -1192,7 +1192,51 @@
                 rows="5" placeholder="Describe your space, style preferences, and timeline…"></textarea></div>
             <button class="btn btn-primary btn-full">Send Message</button>
           </div>
-        </div>
+        </div> -->
+     
+     <div class="contact-form-wrap fade-in-section delay-1">
+  <form class="contact-form" action="https://api.web3forms.com/submit" method="POST">
+
+    <!-- Hidden config -->
+    <input type="hidden" name="access_key" value="83c47432-53b3-4dc6-9345-b7d72dbfbc11" />
+    <input type="hidden" name="subject" value="New Project Inquiry — I Design Interiors" />
+    <input type="hidden" name="from_name" value="I Design Interiors Website" />
+    <input type="checkbox" name="botcheck" style="display:none" />
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="name">Your Name</label>
+        <input type="text" id="name" name="name" placeholder="Ananya Reddy" required />
+      </div>
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="hello@email.com" required />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="project">Project Type</label>
+      <select id="project" name="project">
+        <option value="">Select a service</option>
+        <option>Residential Design</option>
+        <option>Office / Commercial</option>
+        <option>Villa Interiors</option>
+        <option>Furniture & Styling</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="message">Tell us about your project</label>
+      <textarea id="message" name="message" rows="5"
+        placeholder="Describe your space, style preferences, and timeline…"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-full">Send Message</button>
+
+  </form>
+</div>
+
+     
       </div>
     </section>
 
@@ -1526,6 +1570,31 @@
       el.addEventListener("mouseleave", () => gsap.to(cursor, { scale: 1, duration: 0.25 }));
     });
   </script>
+  <script>
+  const contactForm = document.querySelector('.contact-form');
+  contactForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = contactForm.querySelector('button[type="submit"]');
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
+
+    const res  = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      body: new FormData(contactForm)
+    });
+    const json = await res.json();
+
+    if (json.success) {
+      btn.textContent = '✓ Message Sent!';
+      btn.style.background = '#2d7a4f';
+      contactForm.reset();
+    } else {
+      btn.textContent = 'Failed — Try Again';
+      btn.style.background = '#c8102e';
+      btn.disabled = false;
+    }
+  });
+</script>
 
   <!-- Bootstrap JS Bundle (includes Popper.js) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
